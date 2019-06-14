@@ -1,0 +1,11 @@
+{{each data}}
+  <div class="swiper-slide">
+    <div class="poster">
+      <img src="{{$value['img'].replace('w.h','170.230')}}">
+      <span class="wish-bg"></span>
+      <span class="wish"><span class="wish-num">{{$value['wish']}}</span>人想看</span>                
+    </div>                
+    <h5 class="name">{{$value['nm']}}</h5>  
+    <p class="date">{{$value['comingTitle'].slice(0,4)}}</p>
+  </div>
+{{/each}}

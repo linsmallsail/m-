@@ -1,168 +1,210 @@
 @import '../common/icons.scss';
 @import '../common/font-size.scss';
-@import '../common/header.scss';
 
-// 布局方案：
-// 方案一：100%布局，又叫流式布局（高度固定，宽度自适应）
-// 1、控件弹性
-// 2、图片等比例
-// 3、文字流式
-// 特点：手机越大，显示的内容越多
-
-// 方案二：REM布局，又叫等比缩放布局（整个页面等比缩放）
-
-html {
-  // font-size: 26.666667vw;
-  // vw, vh
-  // vw: 1vw = 当前屏幕宽度（逻辑宽度,即window.innerWidth）的 1%
+body{
+  background: #fff;
 }
-
-#app {
+#app,#index,.wrapper{
   height: 100%;
 }
-
-#index {
-  height: 100%;
-}
-
-.container {
-  height: 100%;
+.wrapper{
   display: flex;
   flex-direction: column;
-  header {
-    @extend %header;
-  }
-  main {
-    flex: 1;
-    overflow: hidden;
-    > div {
-      .head, 
-      .foot {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: .4rem;
-      }
-      .head img,
-      .foot img {
-        width: .16rem;
-        height: .16rem;
-        transition: transform 150ms;
-        -webkit-transition: transform 150ms;
-      }
-      .head img {
-        transform: rotate(180deg);
-      }
-      .up {
-        transform: rotate(360deg) !important;
-        -webkit-transform: rotate(360deg) !important;
-      }
-      .down {
-        transform: rotate(180deg);
-      }
+}
+.wrapper header{
+  height: 50px;
+  background: #e54847;
+  text-align: center;
+  line-height: 50px;
+  font-size: 18px;
+  color: #fff;
+}
+.wrapper #title{
+  height:44px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+  @include border(0 0 1px 0);
+}
+#title .place{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+#title a{
+  color: #666;
+  font-weight: 700;
+  border-bottom: 3px solid #fff;
+}
+#title .ing{
+  color: #ef4238;
+  border-bottom: 3px solid #ef4238;
+  line-height: 44px;
+}
+.wrapper main{
+  flex: 1;
 
-      > div:nth-child(2) {
-        height: .44rem;
-        background: #fff;
-        padding: 0 .15rem;
-        display: flex;
-        align-items: center;
-        @include border(0 0 1px 0);
-        h3 {
-          font-weight: 100;
-          font-size: .14rem;
-          line-height: .44rem;
-          flex: 1;
-        }
-        button {
-          padding: 0 .2rem;
-          border-radius: .15rem;
-          height: .3rem;
-          width: .9rem;
-          background-color: #f5f5f5;
-          color: #00b38a;
-          border: 0;
-        }
-      }
-      ul {
-        li {
-          display: flex;
-          padding: .14rem;
-          background: #fff;
-          @include border(0 0 1px 0);
-          > img {
-            width: .6rem;
-            height: .6rem;
+}
+main .mainCon{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+}
+main .mainCon .item{
+  display: flex;
+}
+main .mainCon .item .imgCon{
+ 
+  margin-top:12px;
+  margin-right:12px;
+}
+main .mainCon .item .imgCon img{
+  width: 64px;
+  height:90px;
+
+}
+main .mainCon .item .imgDes{
+  padding:12px 14px 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 255px;
+  height: 90px;
+  @include border(0 0 1px 0 );
+
+  
+}
+main .mainCon .item .imgDes .buy span{
+  width: 47px;
+  height:27px;
+  display: inline-block;
+  background: #e54847;
+  color:#fff;
+  font-size: 12px;
+  text-align: center;
+  line-height: 27px;
+  border-radius: 5px;
+}
+.wrapper nav{
+  height: 48px;
+  @include border(1px 0 0 0 );
+}
+nav ul{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height:100%;
+}
+nav ul li{
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  text-align: center;
+  a{
+    color: #666969;
+  }
+  &.active{
+    color: #f03d37;
+    a{
+      color: #f03d37;
+    }
+  }
+}
+nav ul li i{
+  font-size: 23px; 
+}
+.head, 
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: .4rem;
+}
+.head img,
+.foot img {
+  width: .16rem;
+  height: .16rem;
+  transition: transform 150ms;
+  -webkit-transition: transform 150ms;
+}
+.head img {
+  transform: rotate(180deg);
+}
+.up {
+  transform: rotate(360deg) !important;
+  -webkit-transform: rotate(360deg) !important;
+}
+.down {
+  transform: rotate(180deg);
+}
+#index-scroll{
+  height:525px;
+  overflow: hidden;
+  // overflow: auto;
+}
+.most-expected{
+  padding:12px 20px 12px 15px;
+  margin-bottom: 10px;
+  .title{
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #333;
+  }
+  .swiper-container{
+    width: 100%;
+    height: 161px;
+    .swiper-wrapper{
+      height: 100%;
+      width: max-content;
+      .swiper-slide{
+        width: 85px;
+        margin-right: 10px;
+        float:left;
+        .poster{
+          width: 85px;
+          height: 115px;
+          position: relative;
+          margin-bottom: 6px;
+          img{
+            width: 100%;
+            height:100%;
           }
-          > div.item-desc {
-            flex: 1;
-            padding-left: .1rem;
-            h2 {
-              @include contentFont(16px);
-              margin-bottom: .06rem;
-              @include ellipsis(null, 2);
-            }
-            p.item-info {
-              line-height: .15rem;
-              height: .15rem;
-              margin-bottom: .06rem;
-              display: flex;
-              span.item-pos {
-                flex: 1;
-                display: block;
-                width: 25vw;
-                b {
-                  width: 100%;
-                  display: block;
-                  @include ellipsis();
-                }
-              }
-              span.item-salary {
-                width: .8rem;
-                font-size: .16rem;
-                display: block;
-                color: #00b38a;
-                text-align: right;
-              }
-            }
-            p.item-time {
-              color: #888;
-              // font-size: .12rem;
-              @include contentFont(12px);
-            }
+          span.wish-bg{
+            display: inline-block;
+            width: 100%;
+            height: 35px;
+            position: absolute;
+            bottom: 0;
+            background-image: linear-gradient(-180deg,rgba(77,77,77,0),#000);
           }
+          span.wish{
+            position: absolute;
+            left: 4px;
+            bottom: 2px;
+            color: #faaf00;
+            font-size: 11px;
+            font-weight: 600;
+          }
+        }
+        h5.name{
+          margin: 0 0 3px;
+          font-size: 13px;
+          color: #222;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        p.date{
+          font-size: 12px;
+          color: #999;
         }
       }
     }
-  }
-  nav {
-    height: .44rem;
-    ul {
-      height: .44rem;
-      display: flex;
-      background: #f6f6f6;
-      color: #c2cfcc;
-      @include border(1px 0 0 0);
-
-      li {
-        height: 100%;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: .16rem;
-
-        &.active {
-          background: #e7f3f0;
-          b, i {
-            color: #00b38a;
-          }
-        }
-
-        b {
-          font-weight: 100;
-        }
-      }
-    }
+    
   }
 }

@@ -1,0 +1,33 @@
+<div class="coming-list">
+  {{each movieData}}
+    {{if !!$value['comingTitle']}}
+      <div class="film-list__date">{{$value['comingTitle']}}</div>
+    {{/if}}
+    <div class="film-list__item">
+      <div class="film-list__item-img">
+          <img width="100%" height="100%" src="{{$value['img'].replace('w.h','128.180')}}" alt="">
+      </div>
+      <div class="film-list__item-info">
+        <div class="film-list__item-title">
+          <h1>{{$value['nm']}}</h1>
+          <span class="film-list__item-desc-img max"></span>
+        </div>
+        {{if !$value['sc']}}
+          <div class="film-list__item-grade"><span>{{$value['wish']}}</span>想看</div>
+        {{else}}
+          <div class="film-list__item-grade">观众评<span>{{$value['sc']}}</span></div>                
+        {{/if}}
+        <div class="film-list__item-actor">主演：{{$value['star']}}</div>
+        <div class="film-list__item-count">{{$value['showInfo'] || $value['rt']}}</div>
+      </div>
+      <div class="film-list__item-btn">
+        <!-- <a href="#">{{!$value['preShow']}}</a> -->
+        {{if !$value['sc']}}
+          <div class="film-list__btn film-list__btn--pre">预售</div>                
+        {{else}}
+          <div class="film-list__btn film-list__btn--buy">想看</div> 
+        {{/if}}           
+      </div>
+    </div>
+  {{/each}}   
+</div>

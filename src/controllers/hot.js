@@ -1,26 +1,20 @@
-const positionTpl = require('../views/position.html')
-const positionListTpl = require('../views/position.list.html')
+const fetch = require('../models/fetch')
+const movieListTpl = require('../views/common/movieList.html')
+const hotTpl = require('../views/hot.html')
 const BScroll = require('better-scroll').default
-import Router from '../router/'
-
-import fetch from '../models/fetch'
+const _ = require('lodash')
 
 let positionList = []
-let currentPage = 1
 
-const gotoPage = id => {
-  let router = new Router({mode: 'hash'})
-  router.push('/index/details?id=' + id)
-}
+const render = async () => {
 
-const render = async() => {
-  let result = await fetch.get('/api/listmore.json?pageNo=1&pageSize=15')
-  let data = positionList = result.content.data.page.result
+  $('#index-scroll').html(hotTpl)
+  let dataList = await fetch.get('/api/ajax/movieOnInfoList?token=')
+  let movieData = dataList.movieList
+   
+  let renderedmovieListTpl = template.render(movieListTpl, { movieData })
+  $('#seeMovies').html(renderedmovieListTpl)
 
-  $('main').html(positionTpl)
-  
-  let renderedPositionListTpl = template.render(positionListTpl, { data })
-  $('#position-list').html(renderedPositionListTpl)
 
   // Better scroll 实例化
   let bScroll = new BScroll('#index-scroll', {
@@ -55,8 +49,8 @@ const render = async() => {
   })
 
   // 绑定手指松开触发的事件
-  bScroll.on('scrollEnd', async function() {
-    // 下拉刷新处理
+  bScroll.on('scrollEnd', _.debounce(async function() {
+    // 上拉刷新处理
     if (this.y >= -40 && this.y < 0) {
       this.scrollTo(0, -40)
       head.removeClass('up')
@@ -64,11 +58,11 @@ const render = async() => {
       head.attr('src', '/images/ajax-loader.gif')
 
       // 异步加载数据
-      let result = await fetch.get(`/api/listmore.json?pageNo=2&pageSize=2`)
-      let data = positionList = [...result.content.data.page.result, ...positionList]
+      let result = await fetch.get(`/api/ajax/movieOnInfoList?token=`)
+      let movieData = positionList = result.movieList
 
-      let renderedPositionListTpl = template.render(positionListTpl, { data })
-      $('#position-list').html(renderedPositionListTpl)
+      let renderedmovieListTpl = template.render(movieListTpl, { movieData })
+      $('#seeMovies').html(renderedmovieListTpl)
 
       this.refresh() // 重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
       this.scrollTo(0, -40)
@@ -84,25 +78,21 @@ const render = async() => {
     } else if (maxY >= 0) {
       foot.attr('src', '/images/ajax-loader.gif')
       // 异步加载数据
-      let result = await fetch.get(`/api/listmore.json?pageNo=${++currentPage}&pageSize=15`)
-      let data = positionList = [ ...positionList, ...result.content.data.page.result ]
+      let result = await fetch.get(`/api/ajax/moreComingList?token=&movieIds=887623,1196188,1226516,346629,1184910,1278409,1220829,1225975,1254277,1218727`)
+      let movieData = positionList = [ ...positionList, ...result.coming ]
 
-      let renderedPositionListTpl = template.render(positionListTpl, { data })
-      $('#position-list').html(renderedPositionListTpl)
+      let renderedmovieListTpl = template.render(movieListTpl, { movieData })
+      $('#seeMovies').html(renderedmovieListTpl)
 
       this.refresh() // 重新计算 better-scroll，当 DOM 结构发生变化的时候务必要调用确保滚动的效果正常。
       this.scrollTo(0, this.maxScrollY + 40)
       head.removeClass('down')
       head.attr('src', '/images/arrow.png')
     }
-  })
+  }))
 
-  $('#position-list').on('click', 'li', function() {
-    let id = $(this).attr('data-id')
-    gotoPage(id)
-  })
+
 }
-
 export default {
   render
 }

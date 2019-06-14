@@ -1,9 +1,10 @@
 import index from '../controllers/index'
 import home from '../controllers/home'
-import position from '../controllers/position'
-import search from '../controllers/search'
+import movies from '../controllers/movies'
+import hot from '../controllers/hot'
+import coming from '../controllers/coming'
+import theater from '../controllers/theater'
 import profile from '../controllers/profile'
-import details from '../controllers/details'
 
 export default class Router {
   constructor(obj) {
@@ -12,14 +13,15 @@ export default class Router {
     // 路由配置
     this.routes = {
       '/index': index,
-      '/index/home': home,
-      '/index/details': details,
-      '/index/home/position': position,
-      '/index/home/search': search,
+      '/index/home':home,
+      '/index/home/movies': movies,
+      '/index/home/movies/hot': hot,
+      '/index/home/movies/coming': coming,
+      '/index/home/theater': theater,
       '/index/home/profile': profile
     }
     // 组件挂载根元素
-    this.root = $('#main')
+    this.root = $('#app')
     // 导航菜单列表
     this.navList = $('nav a')
     this.init()
@@ -72,8 +74,8 @@ export default class Router {
       var newURL = e.newURL.split('#')[1];
       var oldURL = e.oldURL.split('#')[1];
     }
-    // 获取当前路径,默认'/index'
-    var currentURL = location.hash.slice(1).split('?')[0] || '/index/home/position';
+    // 获取当前路径,默认'/index/home/movies/hot'
+    var currentURL = location.hash.slice(1).split('?')[0] || '/index/home/movies/hot';
     this.loadView(currentURL)
   }
   /**
@@ -99,12 +101,15 @@ export default class Router {
       currentURL = '/position'
     }
     // 多级链接拆分为数组,遍历依次加载
-    this.currentURLlist = currentURL.slice(1).split('/')
+    this.currentURLlist = currentURL.slice(1).split('/') 
     this.url = ""
     this.currentURLlist.forEach((item, index) => {
       // 导航菜单激活显示
       if (index === 0) {
         this.navActive(item)
+      }
+      if(index === 3){
+        this.seeMovie(item)
       }
       this.url += "/" + item
       this.controllerName = this.routes[this.url]
@@ -214,7 +219,10 @@ export default class Router {
    * 导航激活显示
    * @param  item 当前router对象
    */
-  navActive(item) {
+  navActive(item) { 
     $('nav a').filter(`[href="#${item}"]`).closest('li').addClass('active').siblings().removeClass('active')
+  }
+  seeMovie(item) {
+    $('#title a').filter(`[href="#/index/home/movies/${item}"]`).addClass('ing').siblings().removeClass('ing')
   }
 }
